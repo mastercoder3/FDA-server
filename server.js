@@ -7,7 +7,7 @@ var smtpTransport = require("nodemailer-smtp-transport");
 var moment = require('moment');
 const app = express();
 
-
+var port = process.env.PORT || 3000;
 
 
 
@@ -107,5 +107,5 @@ app.use('/', router);
 
 
 //server running
-app.listen(3000, () => console.log("Express server running"));
+app.listen(port, () => console.log("Express server running"));
 //http://localhost:3000/payments
