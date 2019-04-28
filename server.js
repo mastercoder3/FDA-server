@@ -4,10 +4,12 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 var nodemailer = require('nodemailer');
 var smtpTransport = require("nodemailer-smtp-transport");
+var http = require('http');
 var moment = require('moment');
 const app = express();
 
-
+var port = (process.env.VCAP_APP_PORT || 3000);
+var host = (process.env.VCAP_APP_HOST || 'localhost');
 
 
 const router = express.Router();
@@ -75,7 +77,7 @@ router.route('/sendemail').post((req, res) => {
         // send mail with defined transport object
         let mailList = [
             "bestellung@la-trat-toria.de ",
-            this.data.email
+            data.email
         ];
 
         let info = await transporter.sendMail({
@@ -105,5 +107,7 @@ app.use('/', router);
 
 
 //server running
-app.listen(3000, () => console.log("Express server running"));
+app.listen(port,host, () => console.log("Express server running "+port+host));
 //http://localhost:3000/payments
+
+// http.createServer(function(req,res) { res.writeHead(200,{'Content-Type' : 'text/plain'}); res.end('Hello World from NodeJS'); }).listen(port,host);
